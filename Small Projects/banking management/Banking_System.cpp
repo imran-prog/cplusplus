@@ -150,12 +150,12 @@ int main() {
 		case '6':
 			cout << "\n\n\tEnter the account number: ";
 			cin >> num;
-			delete_account();
+			delete_account(num);
 			break;
 		case '7':
 			cout << "\n\n\tEnter the account number: ";
 			cin >> num;
-			modify_account();
+			modify_account(num);
 			break;
 		case '8':
 			cout << "\n\n\tThanks for using Banking Management System";
@@ -178,7 +178,7 @@ void write_account() {
 	ofstream outFile;
 	outFile.open("account.dat", ios::binary | ios::app);
 	ac.create_account();
-	outFile.write(reinterpret_cast<cast*> (&ac), sizeof(Account);
+	outFile.write(reinterpret_cast<char *> (&ac), sizeof(Account));
 	outFile.close();
 }
 
@@ -198,7 +198,7 @@ void display_sp(int n) {
 	}
 	cout << "\nBALANCE DETAIL\n";
 
-	while (inFile.read(reinterpret_cast<cast*> (&ac), sizeof(Account))) {
+	while (inFile.read(reinterpret_cast<char *> (&ac), sizeof(Account))) {
 
 		if (ac.retacno() == n) {
 			ac.show_account();
@@ -228,8 +228,8 @@ void modify_account(int n) {
 		return;
 	}
 
-	while (!File.eof() && found = false) {
-		File.read(reinterpret_cast<cast*> (&ac), sizeof(Account));
+	while (!File.eof() && found == false) {
+		File.read(reinterpret_cast<char *> (&ac), sizeof(Account));
 
 		if (ac.retacno() == n) {
 			ac.show_account();
@@ -269,7 +269,7 @@ void delete_account(int n)
 	outFile.open("Temp.dat", ios::binary);
 	inFile.seekg(0, ios::beg);
 
-	while (inFile.read(reinterpret_cast<char*> (&ac), sizeof(Account)))
+	while (inFile.read(reinterpret_cast<char *> (&ac), sizeof(Account)))
 	{
 		if (ac.retacno() != n)
 		{
@@ -302,7 +302,7 @@ void display_all()
 	cout << "====================================================\n";
 	cout << "A/c no.      NAME           Type  Balance\n";
 	cout << "====================================================\n";
-	while (inFile.read(reinterpret_cast<char*> (&ac), sizeof(Account)))
+	while (inFile.read(reinterpret_cast<char *> (&ac), sizeof(Account)))
 	{
 		ac.report();
 	}
@@ -327,7 +327,7 @@ void deposit_withdraw(int n, int option)
 	}
 	while (!File.eof() && found == false)
 	{
-		File.read(reinterpret_cast<char*> (&ac), sizeof(Account));
+		File.read(reinterpret_cast<char *> (&ac), sizeof(Account));
 		if (ac.retacno() == n)
 		{
 			ac.show_account();
@@ -351,7 +351,7 @@ void deposit_withdraw(int n, int option)
 			}
 			int pos = (-1) * static_cast<int>(sizeof(ac));
 			File.seekp(pos, ios::cur);
-			File.write(reinterpret_cast<char*> (&ac), sizeof(Account));
+			File.write(reinterpret_cast<char *> (&ac), sizeof(Account));
 			cout << "\n\n\t Record Updated";
 			found = true;
 		}
